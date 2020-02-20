@@ -1,5 +1,11 @@
 <template>
-  <header class="header">header</header>
+  <header class="header">
+    <img class="logo" src="../../assets/logo.png" alt="logo">
+    <nav class="titles">
+      <router-link to="/">精选</router-link>
+      <router-link to="/myPage">我的</router-link>
+    </nav>
+  </header>
 </template>
 
 <script>
@@ -12,5 +18,46 @@ export default {
 .header {
   height: 100px;
   border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+
+  .titles {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+
+    a {
+      text-decoration: none;
+      font-size: 25px;
+      color: rebeccapurple;
+      margin: 0 50px;
+      position: relative;
+
+      &.router-link-exact-active {
+        color: red;
+
+        &::after {
+          content: '';
+          display: inline-block;
+          height: 2px;
+          width: 100%;
+          background-color: red;
+          position: absolute;
+          bottom: -15px;
+          left: 0;
+        }
+      }
+
+    }
+  }
+
+  .logo {
+    width: 110px;
+    height: 40px;
+    box-sizing: content-box;
+    margin:  0 0 0 30px;
+  }
+
 }
+
 </style>
