@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'header',
+  name: 'my-header',
 };
 </script>
 
@@ -28,7 +28,7 @@ export default {
 
     a {
       text-decoration: none;
-      font-size: 25px;
+      font-size: 18px;
       color: rebeccapurple;
       margin: 0 50px;
       position: relative;
