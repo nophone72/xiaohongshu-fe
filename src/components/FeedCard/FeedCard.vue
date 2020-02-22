@@ -1,11 +1,11 @@
 <template>
-  <div class="feed-card" >
+  <div class="feed-card" @click="handleClick">
     <i class="icon-bofang iconfont" v-if="feedData.type === 'video'"></i>
-    <img class="cover" :src="feedData.cover.url" :style="coverStyle">
+    <img class="cover" :src="feedData.images_list[0].url" :style="coverStyle">
     <h3 class="title">{{ feedData.title }}</h3>
     <div class="info">
       <div class="user">
-        <img class="user-img" :src="feedData.user.image" />
+        <img class="user-img" :src="feedData.user.images" />
         <span class="name">{{ feedData.user.nickname }}</span>
       </div>
       <span class="icon"><i class="iconfont icon-like"></i>{{ feedData.likes }}</span>
@@ -21,13 +21,20 @@ export default {
 
   computed: {
     coverStyle() {
-      const { cover: { height, width } } = this.feedData;
+      const { images_list: imageList } = this.feedData;
+      const { height, width } = imageList[0];
 
       return {
         width: '220px',
         // eslint-disable-next-line no-mixed-operators
         height: `${height / width * 220}px`,
       };
+    },
+  },
+
+  methods: {
+    handleClick() {
+      this.$router.push({ path: `/note/${this.feedData.id}` });
     },
   },
 };
@@ -41,6 +48,20 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+
+  &:hover {
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 2, 4, .2);
+    }
+  }
 
   .icon-bofang {
     color: rgb(230, 238, 238);

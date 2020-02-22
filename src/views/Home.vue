@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <div class="column" v-for="i in 5" :key="i">
-      <FeedCard v-for="feed in filterData(i)" :key="feed.id" :feedData="feed"></FeedCard>
+    <div class="colomn" v-for="i in 5" :key="i">
+      <FeedCard v-for="feed in feedCards(i)" :key="feed.id" :feedData="feed" />
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   async created() {
     const params = {
       oid: 'recommend',
-      page: 1,
+      page: 2,
       pageSize: 20,
     };
 
@@ -30,7 +30,6 @@ export default {
       const { data, success } = await getHomeFeed(params);
       if (success) {
         this.feedData = data;
-        console.log(this.feedData);
       } else {
         throw new Error('接口调用错误');
       }
@@ -40,13 +39,8 @@ export default {
   },
 
   methods: {
-    /**
-     * 把数据均分成5份
-     * @param {number} i 第几列
-     * @returns {array} 第 i 列的数据
-     */
-    filterData(i) {
-      return this.feedData.filter((feed, index) => index % 5 === i - 1);
+    feedCards(i) {
+      return this.feedData.filter((item, index) => index % 5 === i - 1);
     },
   },
 
