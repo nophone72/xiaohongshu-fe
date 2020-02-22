@@ -52,6 +52,7 @@ export default {
 
   .cover {
     width: 100%;
+
   }
 
   .title {
