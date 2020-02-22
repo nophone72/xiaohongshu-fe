@@ -3,16 +3,15 @@
     <div class="main">
       <div class="img-window">
         <ul class="img-container" :style="imgContainerStyle">
-          <li
-            class="img"
-            v-for="img in imgList"
-            :key="img.fileid"
-            :style="{ 'background-image': `url(${img.url})` }"
-          ></li>
+          <li v-for="(img, i) in imgList" :key="img.fileid">
+            <transition :name="direction">
+              <div class="img" :style="{ 'background-image': `url(${img.url})` }"></div>
+            </transition>
+          </li>
         </ul>
         <div class="control">
-          <i class="iconfont icon-left-circle"></i>
-          <i class="iconfont icon-right-circle"></i>
+          <i class="iconfont icon-left-circle" @click="handleLeft"></i>
+          <i class="iconfont icon-right-circle" @click="handleRight"></i>
         </div>
       </div>
     </div>
@@ -30,11 +29,27 @@ export default {
     },
   },
 
+  data() {
+    return {
+      direction: '',
+    };
+  },
+
   computed: {
     imgContainerStyle() {
       return {
         width: `${500 * this.imgList.length}px`,
       };
+    },
+  },
+
+  methods: {
+    handleLeft() {
+      this.direction = 'left';
+    },
+
+    handleRight() {
+      this.direction = 'right';
     },
   },
 };
@@ -46,6 +61,7 @@ export default {
     .img-window {
       width: 500px;
       height: 500px;
+      margin: 0 auto;
       overflow: hidden;
       position: relative;
 
@@ -56,6 +72,7 @@ export default {
           width: 500px;
           height: 500px;
           background: no-repeat center / contain;
+          position: absolute;
         }
       }
 
@@ -66,6 +83,11 @@ export default {
           font-size: 50px;
           color: rgb(76, 80, 76);
           transform: translateY(-50%);
+
+          &:hover {
+            color: #888;
+            cursor: pointer;
+          }
         }
 
         .icon-left-circle {
@@ -80,5 +102,22 @@ export default {
       }
     }
   }
+}
+
+.left-leave-to,
+.right-enter {
+  transform: translateX(-100%);
+}
+
+.left-enter,
+.right-leave-to {
+  transform: translateX(100%);
+}
+
+.left-enter-active,
+.left-leave-active,
+.right-enter-active,
+.right-leave-active {
+  transform: all 5s;
 }
 </style>

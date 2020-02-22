@@ -22,8 +22,8 @@ export default {
   async created() {
     const params = {
       oid: 'recommend',
-      page: 2,
-      pageSize: 20,
+      page: 1,
+      pageSize: 40,
     };
 
     try {
