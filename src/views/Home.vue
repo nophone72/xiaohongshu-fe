@@ -59,7 +59,7 @@ export default {
 <style lang="less" scoped>
 .home {
   display: flex;
-  padding: 20px 110px;
+  padding: 20px 120px;
   justify-content: space-around;
 }
 </style>

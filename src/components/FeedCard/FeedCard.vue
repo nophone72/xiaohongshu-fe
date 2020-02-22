@@ -1,5 +1,6 @@
 <template>
-  <div class="feed-card">
+  <div class="feed-card" >
+    <i class="icon-bofang iconfont" v-if="feedData.type === 'video'"></i>
     <img class="cover" :src="feedData.cover.url" :style="coverStyle">
     <h3 class="title">{{ feedData.title }}</h3>
     <div class="info">
@@ -7,8 +8,7 @@
         <img class="user-img" :src="feedData.user.image" />
         <span class="name">{{ feedData.user.nickname }}</span>
       </div>
-
-      <span></span>
+      <span class="icon"><i class="iconfont icon-like"></i>{{ feedData.likes }}</span>
     </div>
   </div>
 </template>
@@ -40,22 +40,51 @@ export default {
   margin: 0 0 20px 0;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
+
+  .icon-bofang {
+    color: rgb(230, 238, 238);
+    font-size: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
 
   .cover {
     width: 100%;
   }
 
   .title {
-    font-size: 14px;
+    font-size: 16px;
     padding: 10px;
     line-height: 20px;
+    letter-spacing: 1.2px;
   }
 
-  .user {
-    padding: 5px;
+  .info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
 
-    .user-img {
-      width: 50px;
+    .user {
+      display: flex;
+      align-items: center;
+
+      .user-img {
+        width: 35px;
+        border-radius: 50%;
+        margin: 0 10px 0 0;
+      }
+
+      .name {
+        font-size: 13px;
+      }
+    }
+
+    .icon .icon-like {
+      color: red;
+      padding: 5px;
     }
   }
 }
