@@ -1,12 +1,20 @@
 <template>
   <div class="comments-container">
-    <div class="title">笔记评论</div>
-    <div
-      class="comments"
-      v-for="(comment, index) in commentList"
-      :key="index"
-    >
-      <div class="author"></div>
+    <div class="title">
+      <p>笔记评论</p>
+    </div>
+    <div class="comments" v-for="(comment, index) in commentList" :key="index">
+      <div class="author">
+        <div class="left">
+          <img src="" />
+          <div class="name-time">
+            <span class="name">{{comment.user.name}}</span>
+            <span class="time"></span>
+          </div>
+        </div>
+
+        <div class="thumb"></div>
+      </div>
       <div class="commentContent">{{comment.content}}</div>
     </div>
   </div>
@@ -33,13 +41,19 @@ export default {
     width: 100%;
     font-size: 16px;
     font-weight: bold;
+    position: relative;
+
+    p {
+      margin-left: 15px;
+    }
 
     &::before {
-      content: '';
-      width: 25px;
-      height: 10px;
+      content: "";
+      width: 6px;
+      height: 100%;
       display: inline-block;
       background-color: rgb(233, 36, 36);
+      position: absolute;
     }
   }
 
@@ -49,7 +63,9 @@ export default {
     .author {
       width: 100%;
       height: 40.2px;
-      background-color: rebeccapurple
+      background-color: rebeccapurple;
+      display: flex;
+      justify-content: space-between;
     }
 
     .commentContent {
