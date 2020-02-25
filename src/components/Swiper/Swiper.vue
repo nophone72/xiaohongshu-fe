@@ -5,7 +5,11 @@
         <ul class="img-container" :style="imgContainerStyle">
           <li v-for="(img, i) in imgList" :key="img.fileid">
             <transition :name="direction">
-              <div class="img" :style="{ 'background-image': `url(${img.url})` }"></div>
+              <div
+                v-show="index === i"
+                :style="{'background-image': `url(${img.url})`}"
+                class="img"
+              ></div>
             </transition>
           </li>
         </ul>
@@ -15,7 +19,16 @@
         </div>
       </div>
     </div>
-    <div class="img-preview"></div>
+    <div class="img-preview">
+      <div
+        class="small-img"
+        v-for="(img, i) in imgList"
+        :key="img.fileid"
+        :style="{'background-image': `url(${img.url})`}"
+        @click="changeImg(i)"
+        :class="{active: index === i}"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -32,6 +45,7 @@ export default {
   data() {
     return {
       direction: '',
+      index: 0,
     };
   },
 
@@ -46,10 +60,17 @@ export default {
   methods: {
     handleLeft() {
       this.direction = 'left';
+      this.index = (this.index - 1 + this.imgList.length) % this.imgList.length;
     },
 
     handleRight() {
       this.direction = 'right';
+      this.index = (this.index + 1) % this.imgList.length;
+    },
+
+    changeImg(i) {
+      this.direction = this.index > i ? 'left' : 'right';
+      this.index = i;
     },
   },
 };
@@ -57,11 +78,42 @@ export default {
 
 <style lang="less" scoped>
 .swiper {
+  display: flex;
+  width: 500px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .img-preview {
+    width: 100%;
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+
+    .small-img {
+      width: 40px;
+      height: 40px;
+      margin: 0 3px;
+      background: no-repeat center / cover;
+      border-radius: 5px;
+      box-sizing: border-box;
+      opacity: 60%;
+      transition: .5s;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .active {
+      border: red 1px solid;
+      opacity: 1;
+      box-shadow: 0 0 5px 1px rgb(218, 139, 139);
+    }
+  }
   .main {
     .img-window {
       width: 500px;
       height: 500px;
-      margin: 0 auto;
       overflow: hidden;
       position: relative;
 
@@ -104,13 +156,13 @@ export default {
   }
 }
 
-.left-leave-to,
-.right-enter {
+.right-leave-to,
+.left-enter {
   transform: translateX(-100%);
 }
 
-.left-enter,
-.right-leave-to {
+.right-enter,
+.left-leave-to {
   transform: translateX(100%);
 }
 
@@ -118,6 +170,6 @@ export default {
 .left-leave-active,
 .right-enter-active,
 .right-leave-active {
-  transform: all 5s;
+  transition: all .5s;
 }
 </style>
