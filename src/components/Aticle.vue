@@ -10,26 +10,23 @@
       ></p>
     </div>
     <div class="count">
-      <span class="liked"><i class="icon-like iconfont"></i>{{liked_count}}</span>
+      <span class="liked"><i class="icon-like2 iconfont"></i>{{liked_count}}</span>
       <span class="comments"><i class="icon-pinglun iconfont"></i> {{collected_count}}</span>
       <span class="collected"><i class="icon-shoucang iconfont"></i> {{comments_count}}</span>
     </div>
     <div
       class="time"
-      @click="changeTime"
-      title="轻点查看具体时间"
-    >发布于 {{setTime(time, isFromTime)}}</div>
+    >发布于 {{formatTime}}</div>
   </div>
 </template>
 
 <script>
-import { setTime } from '@/utils/index';
+import { setTime } from '@/utils';
 
 
 export default {
   data() {
     return {
-      isFromTime: true,
     };
   },
 
@@ -54,14 +51,13 @@ export default {
       const des = this.showAts();
       return des.split('\n');
     },
+
+    formatTime() {
+      return setTime(this.time);
+    },
   },
 
   methods: {
-    setTime,
-
-    changeTime() {
-      this.status = !this.status;
-    },
 
     showAts() {
       let des = this.description;
@@ -108,10 +104,6 @@ export default {
   .time {
     margin: 40px 0;
     color: rgb(172, 161, 161);
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 }
 </style>

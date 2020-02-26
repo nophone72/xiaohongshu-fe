@@ -14,8 +14,8 @@
           </li>
         </ul>
         <div class="control">
-          <i class="iconfont icon-left-circle" @click="handleLeft"></i>
-          <i class="iconfont icon-right-circle" @click="handleRight"></i>
+          <i class="iconfont icon-ziyuan" @click="handleLeft"></i>
+          <i class="iconfont icon-ziyuan1" @click="handleRight"></i>
         </div>
       </div>
     </div>
@@ -132,8 +132,8 @@ export default {
         #control-icon {
           position: absolute;
           top: 50%;
-          font-size: 50px;
-          color: rgb(76, 80, 76);
+          font-size: 35px;
+          color: rgb(168, 175, 168);
           transform: translateY(-50%);
 
           &:hover {
@@ -142,12 +142,12 @@ export default {
           }
         }
 
-        .icon-left-circle {
+        .icon-ziyuan {
           #control-icon();
           left: 10px;
         }
 
-        .icon-right-circle {
+        .icon-ziyuan1 {
           #control-icon();
           right: 10px;
         }

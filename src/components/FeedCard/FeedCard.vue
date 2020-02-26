@@ -1,6 +1,6 @@
 <template>
   <div class="feed-card" @click="handleClick">
-    <i class="icon-bofang iconfont" v-if="feedData.type === 'video'"></i>
+    <i class="icon-play iconfont" v-if="feedData.type === 'video'"></i>
     <img class="cover" :src="feedData.images_list[0].url" :style="coverStyle">
     <h3 class="title">{{ feedData.title }}</h3>
     <div class="info">
@@ -8,7 +8,7 @@
         <img class="user-img" :src="feedData.user.images" />
         <span class="name">{{ feedData.user.nickname }}</span>
       </div>
-      <span class="icon"><i class="iconfont icon-like"></i>{{ feedData.likes }}</span>
+      <span class="icon"><i class="iconfont icon-like2"></i>{{ feedData.likes }}</span>
     </div>
   </div>
 </template>
@@ -63,7 +63,7 @@ export default {
     }
   }
 
-  .icon-bofang {
+  .icon-play {
     color: rgb(230, 238, 238);
     font-size: 20px;
     position: absolute;
@@ -104,7 +104,7 @@ export default {
       }
     }
 
-    .icon .icon-like {
+    .icon .icon-like2 {
       color: red;
       padding: 5px;
     }

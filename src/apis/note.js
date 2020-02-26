@@ -20,3 +20,14 @@ export async function getUser(id) {
 
   return data;
 }
+
+export async function getComment(id, params) {
+  const { data } = await axios({
+    baseURL,
+    url: `note/${id}/comment`,
+    method: 'GET',
+    params,
+  });
+
+  return data;
+}

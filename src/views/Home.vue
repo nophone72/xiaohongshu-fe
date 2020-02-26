@@ -23,7 +23,7 @@ export default {
     const params = {
       oid: 'recommend',
       page: 1,
-      pageSize: 40,
+      page_size: 10,
     };
 
     try {

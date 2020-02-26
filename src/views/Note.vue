@@ -18,6 +18,7 @@
       <Comments
         class="comments"
         :commentList="commentList"
+        :authorId="user.id"
       />
     </div>
     <div class="author-and-recommend">
@@ -35,8 +36,8 @@
         </div>
         <div class="liked">
           <span><p>笔记</p><p v-text="changeNum(user.notes)"></p></span>
-          <span><p>粉丝</p>{{changeNum(user.fans)}}</span>
-          <span><p>获赞与收藏</p>{{changeNum(user.collected+user.liked)}}</span>
+          <span><p>粉丝</p><p>{{changeNum(user.fans)}}</p></span>
+          <span><p>获赞与收藏</p><p>{{changeNum(user.collected+user.liked)}}</p></span>
         </div>
       </div>
       <div class="recommend">
@@ -120,7 +121,6 @@ export default {
     margin-right: 30px;
 
     .comments {
-      background-color: aquamarine;
       width: 100%;
     }
   }

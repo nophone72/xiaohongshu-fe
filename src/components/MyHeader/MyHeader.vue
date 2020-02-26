@@ -20,6 +20,7 @@ export default {
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
+  width: 100vw;
 
   .titles {
     display: flex;

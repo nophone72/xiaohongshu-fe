@@ -6,36 +6,94 @@
     <div class="comments" v-for="(comment, index) in commentList" :key="index">
       <div class="author">
         <div class="left">
-          <img src="" />
+          <img :src="comment.user.image">
           <div class="name-time">
-            <span class="name">{{comment.user.name}}</span>
-            <span class="time"></span>
+            <span class="name">{{comment.user&&comment.user.nickname}}</span>
+            <span class="time">{{setTime(comment.time)}}</span>
           </div>
         </div>
 
-        <div class="thumb"></div>
+        <div class="icon-dianzan1 iconfont"><span>{{comment.likes}}</span></div>
       </div>
       <div class="commentContent">{{comment.content}}</div>
+      <div class="reply" v-for="subReply in comment.sub_comments" :key="subReply.id">
+        <span class="reply-name">
+          {{subReply.user.nickname}}
+          <span v-if="authorId === subReply.user.id">(作者)</span>：
+        </span>
+        <span class="reply-content">{{subReply.content}}</span>
+      </div>
+    </div>
+    <div class="showMore">
+      <span class="word" @click="showMore" v-if="commentList.length < commentsTotal">
+        查看更多评论
+      </span>
+      <span v-else class="noword">
+        没有更多了
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import { getComment } from '@/apis/note';
+import { setTime } from '@/utils/index';
+
+
 export default {
   props: {
-    commentList: {
-      type: Array,
-      default: () => [],
+    authorId: String,
+  },
+
+  data() {
+    return {
+      commentList: [],
+      endId: '',
+      fetching: true,
+      commentsTotal: 0,
+    };
+  },
+
+  methods: {
+    setTime,
+
+    async fetchComment() {
+      try {
+        const { data, success } = await getComment(this.$route.params.id, {
+          page_size: 3,
+          end_id: this.endId,
+        });
+
+        if (success) {
+          const { comments, comments_total: commentsTotal } = data;
+          this.commentsTotal = commentsTotal;
+          this.commentList.push(...comments);
+          this.endId = comments[comments.length - 1].id;
+        } else {
+          throw new Error('接口调用错误');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      this.fetching = false;
     },
+
+    showMore() {
+      if (this.fetching) return;
+      this.fetching = true;
+      this.fetchComment();
+    },
+  },
+
+  created() {
+    this.fetchComment();
   },
 };
 </script>
 
 <style lang="less" scoped>
 .comments-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
 
   .title {
     width: 100%;
@@ -57,21 +115,77 @@ export default {
     }
   }
 
+  .showMore {
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    color: rgb(112, 153, 230);
+
+    .word {
+      cursor: pointer;
+    }
+  }
+
   .comments {
-    width: 485px;
+    margin: 20px 0 0 15px;
+    border-bottom: 1.5px solid rgba(237, 240, 233, 0.637);
 
     .author {
       width: 100%;
       height: 40.2px;
-      background-color: rebeccapurple;
       display: flex;
       justify-content: space-between;
+
+      .iconfont {
+        font-size: 22px;
+        color: rgb(163, 154, 154);
+
+        span {
+          font-size: 16px;
+          margin-left: 5px;
+        }
+      }
+
+      .left {
+        display: flex;
+
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+
+        .name-time {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+          .name {
+            font-size: 14px;
+          }
+
+          .time {
+            color: rgb(163, 154, 154);
+            font-size: 13px;
+          }
+        }
+      }
     }
 
     .commentContent {
-      width: 100%;
-      height: 50px;
-      background-color: rgb(209, 195, 70);
+      margin: 15px 0 20px 42px;
+      font-size: 14px;
+    }
+
+    .reply {
+      padding: 8px 15px;
+      margin: 20px 0 30px 42px;
+      font-size: 14px;
+      color: #333;
+      background-color: rgb(248, 250, 249);
+      line-height: 25px;
+      border-radius: 5px;
     }
   }
 }

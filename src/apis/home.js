@@ -6,7 +6,7 @@ export async function getHomeFeed(params) {
   const { data } = await axios({
     method: 'GET',
     baseURL,
-    url: '/homefeed/notes',
+    url: 'home/homefeed/notes',
     params,
   });
 
