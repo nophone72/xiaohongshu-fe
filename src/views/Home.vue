@@ -55,5 +55,9 @@ export default {
   display: flex;
   padding: 20px 120px;
   justify-content: space-around;
+
+  .colomn {
+    margin: 0 15px;
+  }
 }
 </style>

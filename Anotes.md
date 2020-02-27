@@ -173,3 +173,15 @@ white-space: nowrap;
 ```
 ## ::before
 * 默认inline
+  
+## less scoped
+
+## replace
+* replace(str, (match, p1) => { return })
+* match是匹配到的字符串
+* p1是str加括号的第一个数
+
+## 解决滚动条导致的页面移动
+    margin-left: calc(100vw - 100%); //100%是相对父元素宽度
+
+## vertical-align

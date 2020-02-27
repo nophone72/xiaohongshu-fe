@@ -127,6 +127,7 @@ export default {
 
   .author-and-recommend {
     width: 320px;
+    flex-shrink: 0;
     display: inline-block;
 
     .author {

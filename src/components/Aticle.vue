@@ -11,8 +11,8 @@
     </div>
     <div class="count">
       <span class="liked"><i class="icon-like2 iconfont"></i>{{liked_count}}</span>
-      <span class="comments"><i class="icon-pinglun iconfont"></i> {{collected_count}}</span>
-      <span class="collected"><i class="icon-shoucang iconfont"></i> {{comments_count}}</span>
+      <span class="comments"><i class="icon-pinglun iconfont"></i> {{comments_count}}</span>
+      <span class="collected"><i class="icon-shoucang iconfont"></i> {{collected_count}}</span>
     </div>
     <div
       class="time"

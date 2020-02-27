@@ -20,12 +20,12 @@ export default {
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
-  width: 100vw;
 
   .titles {
     display: flex;
     flex: 1;
     justify-content: center;
+    margin-left: calc(100vw - 100%);
 
     a {
       text-decoration: none;

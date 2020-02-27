@@ -15,17 +15,21 @@
 
         <div class="icon-dianzan1 iconfont"><span>{{comment.likes}}</span></div>
       </div>
-      <div class="commentContent">{{comment.content}}</div>
+      <div class="commentContent" v-html="emojComment(comment.content)"></div>
       <div class="reply" v-for="subReply in comment.sub_comments" :key="subReply.id">
         <span class="reply-name">
           {{subReply.user.nickname}}
           <span v-if="authorId === subReply.user.id">(作者)</span>：
         </span>
-        <span class="reply-content">{{subReply.content}}</span>
+        <span class="reply-content" v-html="emojComment(subReply.content)"></span>
       </div>
     </div>
     <div class="showMore">
-      <span class="word" @click="showMore" v-if="commentList.length < commentsTotal">
+      <span v-if="!commentList.length">
+        <i class="icon-wantempty iconfont"></i>
+        <span class="empty">啊哦，还没有评论哦~</span>
+      </span>
+      <span class="word" @click="showMore" v-else-if="commentList.length < commentsTotal">
         查看更多评论
       </span>
       <span v-else class="noword">
@@ -38,7 +42,7 @@
 <script>
 import { getComment } from '@/apis/note';
 import { setTime } from '@/utils/index';
-
+import pinyin from 'tiny-pinyin';
 
 export default {
   props: {
@@ -56,6 +60,14 @@ export default {
 
   methods: {
     setTime,
+
+    emojComment(content) {
+      return content.replace(/\[(.{2})R\]/g, (match, name) => {
+        const emoj = pinyin.convertToPinyin(name).toLowerCase();
+        const url = `https://ci.xiaohongshu.com/xy_emo_${emoj}.png?v=2`;
+        return `<img src=${url} class="emoj" />`;
+      });
+    },
 
     async fetchComment() {
       try {
@@ -120,6 +132,16 @@ export default {
     text-align: center;
     margin-top: 15px;
     color: rgb(112, 153, 230);
+
+    .iconfont {
+      font-size: 150px;
+    }
+
+    .empty {
+      display: block;
+      margin-top: 20px;
+      font-size: 28px;
+    }
 
     .word {
       cursor: pointer;
@@ -188,5 +210,13 @@ export default {
       border-radius: 5px;
     }
   }
+}
+</style>
+<style>
+.emoj {
+  width: 20px;
+  height: 20px;
+  margin: 0 2px;
+  vertical-align: sub;
 }
 </style>
