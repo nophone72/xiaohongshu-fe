@@ -31,3 +31,14 @@ export async function getComment(id, params) {
 
   return data;
 }
+
+export async function getRelated(id, params) {
+  const { data } = await axios({
+    baseURL,
+    url: `note/${id}/related`,
+    method: 'GET',
+    params,
+  });
+
+  return data;
+}

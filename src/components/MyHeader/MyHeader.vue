@@ -2,8 +2,8 @@
   <header class="header">
     <img class="logo" src="../../assets/logo.png" alt="logo">
     <nav class="titles">
-      <router-link to="/">精选</router-link>
-      <router-link to="/myPage">我的</router-link>
+      <router-link to="/home">精选</router-link>
+      <router-link to="/user/5b626cabe8ac2b392e824083">我的</router-link>
     </nav>
   </header>
 </template>
@@ -34,7 +34,7 @@ export default {
       margin: 0 50px;
       position: relative;
 
-      &.router-link-exact-active {
+      &.router-link-active {
         color: red;
 
         &::after {

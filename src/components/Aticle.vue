@@ -1,12 +1,12 @@
 <template>
   <div class="article-container">
-    <h2 class="title">{{title}}</h2>
+    <h2 class="title">{{emojComment(title)}}</h2>
     <div class="desc">
       <p
         class="paragragh"
         v-for="(p, index) in paragraphs"
         :key="index"
-        v-html="p"
+        v-html="emojComment(p)"
       ></p>
     </div>
     <div class="count">
@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import { setTime } from '@/utils';
-
+import { setTime, emojComment } from '@/utils';
 
 export default {
   data() {
@@ -58,6 +57,7 @@ export default {
   },
 
   methods: {
+    emojComment,
 
     showAts() {
       let des = this.description;

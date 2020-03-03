@@ -73,7 +73,7 @@ export default {
 
   .cover {
     width: 100%;
-
+    background: #ddd;
   }
 
   .title {
@@ -95,6 +95,7 @@ export default {
 
       .user-img {
         width: 35px;
+        height: 35px;
         border-radius: 50%;
         margin: 0 10px 0 0;
       }

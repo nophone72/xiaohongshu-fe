@@ -1,8 +1,13 @@
 <template>
   <div class="container">
     <div class="note-container">
-      <div class="imgs">
-        <Swiper :imgList="noteData.images_list" />
+      <div class="img-or-video">
+        <Swiper v-if="noteData.type === 'normal'" :imgList="noteData.images_list" />
+        <Video
+          v-else-if="noteData.type === 'video'"
+          :url="noteData.video.url"
+          :poster="noteData.images_list[0].url"
+        />
       </div>
       <div class="word">
         <Aticle
@@ -17,20 +22,19 @@
       </div>
       <Comments
         class="comments"
-        :commentList="commentList"
         :authorId="user.id"
       />
     </div>
     <div class="author-and-recommend">
       <div class="author">
         <h3>笔记作者</h3>
-        <div class="info">
+        <div class="info" @click="jumpToUser(user.id)">
           <div class="pic"><img :src="user.image"></div>
           <div class="name">
             <div
               class="nickname">
               {{user.nickname}}
-              <img v-if="user.level" :src="user.level.image" /></div>
+              <img v-if="user.level" :src="user.level.image" /></div> <!-- ?? -->
             <div class="desc">{{user.desc}}</div>
           </div>
         </div>
@@ -40,8 +44,7 @@
           <span><p>获赞与收藏</p><p>{{changeNum(user.collected+user.liked)}}</p></span>
         </div>
       </div>
-      <div class="recommend">
-      </div>
+      <Related />
     </div>
   </div>
 </template>
@@ -52,21 +55,32 @@ import Swiper from '@/components/Swiper/Swiper.vue';
 import Aticle from '@/components/Aticle.vue';
 import { changeNum } from '@/utils/index';
 import Comments from '@/components/Comments.vue';
+import Video from '@/components/Video.vue';
+import Related from '@/components/Related.vue';
 
 export default {
   data() {
     return {
       noteData: {},
       user: {},
-      commentList: [],
     };
   },
 
-  async created() {
+  created() {
     this.fetchNode();
+    window.scrollTo(0, 0);
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    this.fetchNode();
+    next();
   },
 
   methods: {
+    jumpToUser(id) {
+      if (id !== undefined) { this.$router.push({ path: `/user/${id}` }); }
+    },
+
     changeNum,
     async fetchNode() {
       try {
@@ -75,8 +89,6 @@ export default {
           const [originData] = data;
           const { note_list: nodeList, user } = originData;
           const [noteData] = nodeList;
-          const { comment_list: commentList } = originData;
-          this.commentList = commentList;
           this.noteData = noteData;
           this.fetchUser(user.id);
         } else {
@@ -105,6 +117,8 @@ export default {
     Swiper,
     Aticle,
     Comments,
+    Video,
+    Related,
   },
 };
 </script>
@@ -119,6 +133,10 @@ export default {
   .note-container {
     width: 500px;
     margin-right: 30px;
+
+    .img-or-video {
+      width: 100%;
+    }
 
     .comments {
       width: 100%;
@@ -208,12 +226,6 @@ export default {
 
         }
       }
-    }
-
-    .recommend {
-      background-color: red;
-      width: 100%;
-      height: 400px;
     }
   }
 

@@ -41,8 +41,7 @@
 
 <script>
 import { getComment } from '@/apis/note';
-import { setTime } from '@/utils/index';
-import pinyin from 'tiny-pinyin';
+import { setTime, emojComment } from '@/utils';
 
 export default {
   props: {
@@ -61,13 +60,7 @@ export default {
   methods: {
     setTime,
 
-    emojComment(content) {
-      return content.replace(/\[(.{2})R\]/g, (match, name) => {
-        const emoj = pinyin.convertToPinyin(name).toLowerCase();
-        const url = `https://ci.xiaohongshu.com/xy_emo_${emoj}.png?v=2`;
-        return `<img src=${url} class="emoj" />`;
-      });
-    },
+    emojComment,
 
     async fetchComment() {
       try {
@@ -196,13 +189,13 @@ export default {
     }
 
     .commentContent {
-      margin: 15px 0 20px 42px;
+      margin: 15px 0 18px 42px;
       font-size: 14px;
     }
 
     .reply {
       padding: 8px 15px;
-      margin: 20px 0 30px 42px;
+      margin: 20px 0 20px 42px;
       font-size: 14px;
       color: #333;
       background-color: rgb(248, 250, 249);

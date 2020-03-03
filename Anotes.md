@@ -169,13 +169,25 @@ console.log('script end');
 ```css
 text-overflow: ellipsis;
 overflow: hidden;
-white-space: nowrap;
+white-space: nowrap; //单行
 ```
+```css
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 3;
+overflow: hidden; //多行
+```
+
 ## ::before
 * 默认inline
   
 ## less scoped
-
+* display flex异常
+* 给HTML的DOM节点加一个不重复data属性(形如：data-v-19fca230)来表示他的唯一性
+* 在每句css选择器的末尾（编译后的生成的css语句）加一个当前组件的data属性选择器来私有化样式 **？**
+* **如果组件内部包含有其他组件，则会给其他组件的最外层标签加上当前组件的data属性**
+* **同一组件中类名不能重复，即使不在一级**
+  
 ## replace
 * replace(str, (match, p1) => { return })
 * match是匹配到的字符串
@@ -185,3 +197,36 @@ white-space: nowrap;
     margin-left: calc(100vw - 100%); //100%是相对父元素宽度
 
 ## vertical-align
+
+## fetching 防连续拉取数据
+* 拉数据过程中 fetching = true，调用fetch函数直接 return
+
+## object-fill
+设置图片或video在容器中的cover/contain/fill
+
+## 动态路由分配
+* 响应路由参数的变化
+* 当使用路由参数时，例如从 /user/foo 导航到 /user/bar，原来的组件实例会被复用。因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。不过，这也意味着组件的生命周期钩子不会再被调用。
+* 可以简单地 watch (监测变化) $route 对象
+* 或者使用 beforeRouteUpdate 导航守卫：
+
+## text-align : 默认继承
+
+## %：下列几种**
+* 相对于content-box**宽度**:**width、margin、padding**
+* 相对于content-box高度:**height**
+* 相对于border-box宽度：**left、right**
+* 相对于border-box高度：**top、bottom**
+* 相对于自身宽高：**background-size、border-radius、transform:translate()、border-image-width、transform-origin**
+* 相对于父元素font-size: **font-size**
+* 相对于自身字号： **line-height**
+* 相对于行高：**vertical-align**
+
+## undefined 转布尔值不是false
+
+## keep-alive
+
+## DOM操作一般挂载到mounted钩子
+
+## Vue 不能检测对象属性的添加或删除
+

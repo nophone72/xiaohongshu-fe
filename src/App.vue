@@ -17,4 +17,8 @@ export default {
 
 <style lang="less">
 @import '~@/assets/styles/index.less';
+
+body {
+  min-height: 101vh;
+}
 </style>
