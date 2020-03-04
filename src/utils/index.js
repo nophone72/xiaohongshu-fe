@@ -11,11 +11,11 @@ export function setTime(time) {
   const stringTime = typeof (time) === 'number' ? time * 1000 : time;
   let day = '';
   const Time = dayjs(stringTime);
-  const diffrence = dayjs().diff(Time, 'day');
+  const diffrence = dayjs().diff(Time, 'hour');
 
-  if (diffrence === 1) {
+  if (diffrence <= new Date().getHours() + 24 && diffrence >= new Date().getHours()) {
     day = '昨天';
-  } else if (diffrence === 0) {
+  } else if (diffrence < new Date().getHours()) {
     day = '今天';
   } else {
     day = Time.format('YYYY-MM-DD');

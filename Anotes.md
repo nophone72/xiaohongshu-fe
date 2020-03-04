@@ -211,6 +211,7 @@ overflow: hidden; //多行
 * 或者使用 beforeRouteUpdate 导航守卫：
 
 ## text-align : 默认继承
+* 脱离文档流后不生效
 
 ## %：下列几种**
 * 相对于content-box**宽度**:**width、margin、padding**

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <div class="colomn" v-for="i in 5" :key="i">
-      <FeedCard v-for="feed in feedCards(i)" :key="feed.id" :feedData="feed" />
+    <div class="colom-container">
+      <div class="colomn" v-for="i in 5" :key="i" ref="i">
+        <FeedCard v-for="feed in feedCards(i)" :key="feed.id" :feedData="feed" />
+      </div>
     </div>
   </div>
 </template>
@@ -10,6 +12,7 @@
 import { getHomeFeed } from '@/apis/home';
 import FeedCard from '@/components/FeedCard/FeedCard.vue';
 import throttle from 'lodash/throttle';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -17,12 +20,13 @@ export default {
   data() {
     return {
       feedData: [],
-      params: {
-        oid: 'homefeed.fitness_v2',
-        endId: '',
-      },
+      endId: '',
       fetching: false,
     };
+  },
+
+  computed: {
+    ...mapState(['oid']),
   },
 
   created() {
@@ -31,11 +35,19 @@ export default {
   },
 
   mounted() {
-    window.addEventListener('scroll', this.handleScrollThrottle);// dom操作放这
+    window.addEventListener('scroll', this.handleScrollThrottle); // dom操作放这
   },
 
   destroyed() {
     window.removeEventListener('scroll', this.handleScrollThrottle);
+  },
+
+  watch: {
+    oid() {
+      this.feedData = [];
+      this.endId = '';
+      this.fetchData();
+    },
   },
 
   methods: {
@@ -43,7 +55,6 @@ export default {
       if (this.fetching) return;
       const el = document.documentElement;
       if (el.scrollTop + el.clientHeight >= el.scrollHeight - 150) {
-        this.fetching = true;
         this.fetchData();
       }
     },
@@ -53,12 +64,18 @@ export default {
     },
 
     async fetchData() {
+      if (this.fetching) return;
+      this.fetching = true;
       try {
-        const { data, success } = await getHomeFeed(this.params);
-        console.log(data, success);
+        const { data, success } = await getHomeFeed({
+          oid: this.oid,
+          cursor_score: this.endId,
+        });
         if (success) {
-          this.params.endId = this.feedData[this.feedData.length - 1].cursor_score;
           this.feedData.push(...data);
+          this.endId = this.feedData[
+            this.feedData.length - 1
+          ].cursor_score;
         } else {
           throw new Error('接口调用错误');
         }
@@ -77,9 +94,21 @@ export default {
 
 <style lang="less" scoped>
 .home {
-  display: flex;
-  padding: 20px 120px;
-  justify-content: space-around;
+
+  .categories {
+    width: 80vw;
+    height: 40px;
+    // background-color: rgb(241, 243, 245);
+    margin: 6px auto;
+    border-radius: 5px;
+  }
+
+  .colom-container {
+    display: flex;
+    padding: 6px 120px;
+    justify-content: space-around;
+
+  }
 
   .colomn {
     margin: 0 15px;

@@ -1,6 +1,9 @@
 <template>
   <header class="header">
     <img class="logo" src="../../assets/logo.png" alt="logo">
+    <div class="categories">
+      <Categories />
+    </div>
     <nav class="titles">
       <router-link to="/home">精选</router-link>
       <router-link to="/user/5b626cabe8ac2b392e824083">我的</router-link>
@@ -9,8 +12,13 @@
 </template>
 
 <script>
+import Categories from '@/components/Categories.vue';
+
 export default {
   name: 'my-header',
+  components: {
+    Categories,
+  },
 };
 </script>
 
@@ -23,7 +31,7 @@ export default {
 
   .titles {
     display: flex;
-    flex: 1;
+    flex: 1 0;
     justify-content: center;
     margin-left: calc(100vw - 100%);
 

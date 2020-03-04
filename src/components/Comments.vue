@@ -73,7 +73,9 @@ export default {
           const { comments, comments_total: commentsTotal } = data;
           this.commentsTotal = commentsTotal;
           this.commentList.push(...comments);
-          this.endId = comments[comments.length - 1].id;
+          if (comments.length) {
+            this.endId = comments[comments.length - 1].id;
+          }
         } else {
           throw new Error('接口调用错误');
         }
