@@ -1,7 +1,11 @@
 <template>
-  <div class="CN-container">
-    <div class="colom" v-for="i in 4" :key="i">
-      <FeedCard v-for="note in noteCard(i) " :key="note.id" :feedData="note" />
+  <div class="UCN-container">
+    <div class="CN-container" v-if="orignData.length">
+      <Fall :fetching="fetching" :num="4" :data="orignData" />
+    </div>
+    <div class="empty" v-else-if="!fetching">
+      <i class="icon-wantempty iconfont"></i>
+      <span class="word">这里还是空的哦</span>
     </div>
   </div>
 </template>
@@ -9,14 +13,13 @@
 <script>
 import { getUserCollect } from '@/apis/userCollect';
 import { getUserNote } from '@/apis/userNote';
-import FeedCard from '@/components/FeedCard/FeedCard.vue';
 import throttle from 'lodash/throttle';
+import Fall from '@/components/Fall.vue';
+
 
 export default {
   data() {
     return {
-      noteList: [],
-
       page: 1,
       pageSize: 12,
 
@@ -24,6 +27,8 @@ export default {
       bottom_start: '',
 
       fetching: false,
+
+      orignData: [],
     };
   },
 
@@ -53,8 +58,6 @@ export default {
 
   methods: {
     clear() {
-      this.noteList = [];
-
       this.page = 1;
       this.pageSize = 12;
 
@@ -65,25 +68,26 @@ export default {
     },
 
     fetchData() {
-      if (this.status === 'notes') this.fetchUserNote();
-      else if (this.status === 'collected') this.fetchUserCollect();
+      if (this.fetching) return;
+      this.fetching = true;
+      if (this.status === 'note') this.fetchUserNote();
+      else if (this.status === 'collect') this.fetchUserCollect();
     },
 
     handleScroll() {
       if (this.fetching) return;
       const el = document.documentElement;
-      if (el.scrollTop + el.clientHeight >= el.scrollHeight - 150) {
+      if (
+        el.scrollTop + el.clientHeight >= el.scrollHeight - 150
+        && this.orignData.length
+      ) {
         this.page += 1;
-        this.fetching = true;
         this.fetchData();
       }
     },
 
-    noteCard(i) {
-      return this.noteList.filter((item, index) => index % 4 === i - 1);
-    },
-
     async fetchUserNote() {
+      this.fetching = true;
       try {
         const { data, success } = await getUserNote(this.$route.params.id, {
           page_size: this.pageSize,
@@ -92,7 +96,7 @@ export default {
 
         if (success) {
           const { notes } = data;
-          this.noteList.push(...notes);
+          this.orignData = notes;
         } else {
           throw new Error('接口调用错误');
         }
@@ -110,8 +114,10 @@ export default {
         });
 
         if (success) {
-          this.noteList.push(...data);
-          this.bottom_start = this.noteList[this.noteList.length - 1].id;
+          if (data.length) {
+            this.orignData = data;
+            this.bottom_start = data[data.length - 1].id;
+          }
         } else {
           throw new Error('接口调用错误');
         }
@@ -123,7 +129,7 @@ export default {
   },
 
   components: {
-    FeedCard,
+    Fall,
   },
 };
 </script>
@@ -132,11 +138,31 @@ export default {
 .CN-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 20px;
 
   .colom {
     margin: 0 15px;
     width: 220px;
+  }
+}
+
+.empty {
+  margin: 60px auto;
+  width: 400px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: rgb(112, 153, 230);
+
+  .word {
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .iconfont {
+    font-size: 100px;
   }
 }
 </style>

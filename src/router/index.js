@@ -26,11 +26,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "note" */ '../views/User/User.vue'),
     children: [
       {
+        name: 'note',
         path: 'note',
         component: () => import('../views/User/UserCollectAndNote.vue'),
       },
 
       {
+        name: 'collect',
         path: 'collect',
         component: () => import('../views/User/UserCollectAndNote.vue'),
       },

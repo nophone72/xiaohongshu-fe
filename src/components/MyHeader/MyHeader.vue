@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <img class="logo" src="../../assets/logo.png" alt="logo">
-    <div class="categories">
+    <div class="categories" v-if="isShowCat">
       <Categories />
     </div>
     <nav class="titles">
@@ -13,9 +13,15 @@
 
 <script>
 import Categories from '@/components/Categories.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'my-header',
+
+  computed: {
+    ...mapState(['isShowCat']),
+  },
+
   components: {
     Categories,
   },

@@ -231,3 +231,20 @@ overflow: hidden; //多行
 
 ## Vue 不能检测对象属性的添加或删除
 
+## position: relative:只是在视觉上显示出有偏差
+* 不脱离文档流
+* 设置为相对定位的元素框会偏移某个距离。
+* 元素仍然保持其未定位前的形状，它原本所占的空间仍保留。
+* Relative存在”形影分离”，所以一般情况下不建议添加值了，一般给子元素当参照位置，或者是元素的微调。
+* 应用了position:absolute之后，display为block
+* 脱离标准流的属性有哪些:float  position:absolute  position:fixed.
+
+## scrollTo
+
+## align-items 默认stretch，无限长
+
+## 懒加载图片(vue-lazy)
+
+## 无限滚动的改进（intersectionObserver）
+
+* 瀑布流组件

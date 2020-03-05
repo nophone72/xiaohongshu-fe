@@ -136,6 +136,7 @@ export default {
 
     .img-or-video {
       width: 100%;
+      min-height: 500px;
     }
 
     .comments {

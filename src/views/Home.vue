@@ -1,18 +1,12 @@
 <template>
-  <div class="home">
-    <div class="colom-container">
-      <div class="colomn" v-for="i in 5" :key="i" ref="i">
-        <FeedCard v-for="feed in feedCards(i)" :key="feed.id" :feedData="feed" />
-      </div>
-    </div>
-  </div>
+  <Fall :fetching="fetching" :num="5" :data="orignData"/>
 </template>
 
 <script>
 import { getHomeFeed } from '@/apis/home';
-import FeedCard from '@/components/FeedCard/FeedCard.vue';
 import throttle from 'lodash/throttle';
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import Fall from '@/components/Fall.vue';
 
 export default {
   name: 'Home',
@@ -22,6 +16,7 @@ export default {
       feedData: [],
       endId: '',
       fetching: false,
+      orignData: [],
     };
   },
 
@@ -30,6 +25,7 @@ export default {
   },
 
   created() {
+    this.setIsShowCat(true);
     this.fetchData();
     this.handleScrollThrottle = throttle(this.handleScroll, 200);
   },
@@ -40,6 +36,7 @@ export default {
 
   destroyed() {
     window.removeEventListener('scroll', this.handleScrollThrottle);
+    this.setIsShowCat(false);
   },
 
   watch: {
@@ -60,7 +57,7 @@ export default {
     },
 
     feedCards(i) {
-      return this.feedData.filter((item, index) => index % 5 === i - 1);
+      return this.feedData.filter((item) => item.column === i - 1);
     },
 
     async fetchData() {
@@ -72,9 +69,9 @@ export default {
           cursor_score: this.endId,
         });
         if (success) {
-          this.feedData.push(...data);
-          this.endId = this.feedData[
-            this.feedData.length - 1
+          this.orignData = data;
+          this.endId = data[
+            data.length - 1
           ].cursor_score;
         } else {
           throw new Error('接口调用错误');
@@ -84,34 +81,15 @@ export default {
       }
       this.fetching = false;
     },
+
+    ...mapMutations(['setIsShowCat']),
   },
 
   components: {
-    FeedCard,
+    Fall,
   },
 };
 </script>
 
 <style lang="less" scoped>
-.home {
-
-  .categories {
-    width: 80vw;
-    height: 40px;
-    // background-color: rgb(241, 243, 245);
-    margin: 6px auto;
-    border-radius: 5px;
-  }
-
-  .colom-container {
-    display: flex;
-    padding: 6px 120px;
-    justify-content: space-around;
-
-  }
-
-  .colomn {
-    margin: 0 15px;
-  }
-}
 </style>

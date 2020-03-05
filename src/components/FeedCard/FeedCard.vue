@@ -1,11 +1,11 @@
 <template>
   <div class="feed-card" @click="handleClick">
     <i class="icon-play iconfont" v-if="feedData.type === 'video'"></i>
-    <img class="cover" :src="feedData.images_list[0].url" :style="coverStyle">
+    <img class="cover" v-lazy="feedData.images_list[0].url" :style="coverStyle">
     <h3 class="title">{{ feedData.title }}</h3>
     <div class="info">
       <div class="user">
-        <img class="user-img" :src="feedData.user.images" />
+        <img class="user-img" v-lazy="feedData.user.images" />
         <span class="name">{{ feedData.user.nickname }}</span>
       </div>
       <span class="icon"><i class="iconfont icon-like2"></i>{{ feedData.likes }}</span>

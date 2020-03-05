@@ -37,12 +37,12 @@
         <router-link
           class="notes"
           :to="`/user/${user.id}/note`"
-          @click.native="status('notes')"
+          @click.native="status('note')"
         >笔记</router-link>
         <router-link
           class="collected"
           :to="`/user/${user.id}/collect`"
-          @click.native="status('collected')"
+          @click.native="status('collect')"
         >收藏</router-link>
       </div>
       <div class="content">
@@ -61,7 +61,7 @@ export default {
     return {
       user: {},
       id: this.$route.params.id,
-      symbol: 'notes',
+      symbol: this.$route.name,
     };
   },
 
@@ -105,8 +105,7 @@ export default {
 <style lang="less" scoped>
 .MyPage {
   .notes-collect {
-    margin: 30px auto;
-    width: 940px;
+    margin: 30px 0;
 
     .content {
       min-height: 100vh;
