@@ -1,5 +1,5 @@
 <template>
-  <Fall :fetching="fetching" :num="5" :data="orignData"/>
+  <Fall :fetching="fetching" ref="fall" :num="5" :data="orignData"/>
 </template>
 
 <script>
@@ -43,6 +43,7 @@ export default {
     oid() {
       this.feedData = [];
       this.endId = '';
+      this.$refs.fall.reset();
       this.fetchData();
     },
   },

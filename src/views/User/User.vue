@@ -116,7 +116,6 @@ export default {
       display: flex;
       justify-content: center;
       height: 30px;
-      color: #555;
 
       .notes,
       .collected {
@@ -124,25 +123,28 @@ export default {
         position: relative;
         cursor: pointer;
         text-decoration: none;
+        color: #555;
+
 
         &::after {
           content: "";
           background-color: rgb(214, 209, 209);
           display: inline-block;
           width: 90px;
-          height: 1.5px;
+          height: 4px;
           position: absolute;
           bottom: -1px;
           left: -20px;
         }
 
         &.router-link-exact-active {
+          color: rgb(223, 41, 41);
           &::after {
             content: "";
             background-color: rgb(223, 41, 41);
             display: inline-block;
             width: 90px;
-            height: 1.5px;
+            height: 4px;
             position: absolute;
             bottom: -1px;
             left: -20px;

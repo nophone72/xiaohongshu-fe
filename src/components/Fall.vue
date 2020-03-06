@@ -38,6 +38,10 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.noteList = [];
+    },
+
     feedCards(i) {
       return this.noteList.filter((item, index) => index % this.num === i - 1);
     },

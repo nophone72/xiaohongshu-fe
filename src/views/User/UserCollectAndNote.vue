@@ -1,6 +1,6 @@
 <template>
   <div class="UCN-container">
-    <div class="CN-container" v-if="orignData.length">
+    <div class="CN-container" v-if="allData.length">
       <Fall :fetching="fetching" :num="4" :data="orignData" />
     </div>
     <div class="empty" v-else-if="!fetching">
@@ -27,6 +27,7 @@ export default {
       bottom_start: '',
 
       fetching: false,
+      allData: [],
 
       orignData: [],
     };
@@ -63,6 +64,8 @@ export default {
 
       this.num = 1;
       this.bottom_start = '';
+      this.allData = [];
+      this.orignData = [];
 
       this.fetching = false;
     },
@@ -97,6 +100,7 @@ export default {
         if (success) {
           const { notes } = data;
           this.orignData = notes;
+          this.allData.push(...notes);
         } else {
           throw new Error('接口调用错误');
         }
@@ -117,6 +121,7 @@ export default {
           if (data.length) {
             this.orignData = data;
             this.bottom_start = data[data.length - 1].id;
+            this.allData.push(...data);
           }
         } else {
           throw new Error('接口调用错误');
@@ -136,14 +141,7 @@ export default {
 
 <style lang="less" scoped>
 .CN-container {
-  display: flex;
-  justify-content: space-between;
   margin-top: 20px;
-
-  .colom {
-    margin: 0 15px;
-    width: 220px;
-  }
 }
 
 .empty {

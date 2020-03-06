@@ -193,6 +193,7 @@ export default {
     .commentContent {
       margin: 15px 0 18px 42px;
       font-size: 14px;
+      line-height: 25px;
     }
 
     .reply {
