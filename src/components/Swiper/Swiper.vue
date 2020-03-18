@@ -170,6 +170,6 @@ export default {
 .left-leave-active,
 .right-enter-active,
 .right-leave-active {
-  transition: all .5s;
+  transition: all .8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
 }
 </style>

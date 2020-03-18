@@ -105,13 +105,13 @@ export default {
       margin: 8px 10px;
       padding: 2px 5px 0 5px;
       height: 22px;
-      border: 1px solid rgb(236, 211, 211);
+      border: 1px solid rgb(197, 195, 195);
       border-radius: 5px;
       box-shadow: 0.5px 0.5px wheat;
       cursor: pointer;
 
         &.active {
-          box-shadow: 0.5px 0.5px 3px 1px rgb(223, 199, 199);
+          box-shadow: 0.5px 0.5px 3px 2px rgb(216, 175, 175);
           background-color: rgb(241, 180, 180);
         }
     }
