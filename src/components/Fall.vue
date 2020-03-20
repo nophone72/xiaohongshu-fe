@@ -13,7 +13,6 @@
 import FeedCard from '@/components/FeedCard/FeedCard.vue';
 import Loading from '@/components/Loading/Loading.vue';
 
-
 export default {
   data() {
     return {
@@ -93,7 +92,7 @@ export default {
   }
 
   .containerLoading {
-    opacity: 70%;
+    opacity: 0.7;
     filter: blur(.5px);
   }
 
