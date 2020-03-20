@@ -43,7 +43,7 @@ export default {
     },
 
     feedCards(i) {
-      return this.noteList.filter((item, index) => index % this.num === i - 1);
+      return this.noteList.filter((item) => item.column === i - 1);
     },
 
     pushData(data) {
