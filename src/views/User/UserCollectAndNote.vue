@@ -24,7 +24,7 @@ export default {
       pageSize: 12,
 
       num: 1,
-      bottom_start: '',
+      start: '',
 
       fetching: false,
       allData: [],
@@ -62,8 +62,8 @@ export default {
       this.page = 1;
       this.pageSize = 12;
 
-      this.num = 1;
-      this.bottom_start = '';
+      this.num = 8;
+      this.start = '';
       this.allData = [];
       this.orignData = [];
 
@@ -98,9 +98,9 @@ export default {
         });
 
         if (success) {
-          const { notes } = data;
-          this.orignData = notes;
-          this.allData.push(...notes);
+          // const { notes } = data;
+          this.orignData = data;
+          this.allData.push(...data);
         } else {
           throw new Error('接口调用错误');
         }
@@ -114,13 +114,13 @@ export default {
       try {
         const { data, success } = await getUserCollect(this.$route.params.id, {
           num: this.num,
-          bottom_start: this.bottom_start,
+          start: this.start,
         });
 
         if (success) {
           if (data.length) {
             this.orignData = data;
-            this.bottom_start = data[data.length - 1].id;
+            this.start = data[data.length - 1].id;
             this.allData.push(...data);
           }
         } else {

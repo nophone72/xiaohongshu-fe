@@ -1,7 +1,7 @@
 <template>
   <div class="feed-card" @click="handleClick">
     <i class="icon-play iconfont" v-if="feedData.type === 'video'"></i>
-    <img class="cover" v-lazy="feedData.images_list[0].url" :style="coverStyle">
+    <img class="cover" v-lazy="feedData.cover.url" :style="coverStyle">
     <h3 class="title">{{ feedData.title }}</h3>
     <div class="info">
       <div class="user">
@@ -21,8 +21,8 @@ export default {
 
   computed: {
     coverStyle() {
-      const { images_list: imageList } = this.feedData;
-      const { height, width } = imageList[0];
+      const { cover } = this.feedData;
+      const { height, width } = cover;
 
       return {
         width: '220px',

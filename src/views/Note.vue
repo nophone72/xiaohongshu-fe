@@ -2,11 +2,11 @@
   <div class="container">
     <div class="note-container">
       <div class="img-or-video">
-        <Swiper v-if="noteData.type === 'normal'" :imgList="noteData.images_list" />
+        <Swiper v-if="noteData.type === 'normal'" :imgList="noteData.imageList" />
         <Video
           v-else-if="noteData.type === 'video'"
           :url="noteData.video.url"
-          :poster="noteData.images_list[0].url"
+          :poster="noteData.imageList[0].url"
         />
       </div>
       <div class="word">
@@ -63,6 +63,7 @@ export default {
     return {
       noteData: {},
       user: {},
+      noteId: this.$route.params.id,
     };
   },
 
@@ -72,6 +73,7 @@ export default {
   },
 
   beforeRouteUpdate(to, from, next) {
+    this.noteId = to.params.id;
     this.fetchNode();
     next();
   },
@@ -84,12 +86,10 @@ export default {
     changeNum,
     async fetchNode() {
       try {
-        const { data, success } = await getNote(this.$route.params.id);
+        const { data, success } = await getNote(this.noteId);
         if (success) {
-          const [originData] = data;
-          const { note_list: nodeList, user } = originData;
-          const [noteData] = nodeList;
-          this.noteData = noteData;
+          this.noteData = data;
+          const { user } = data;
           this.fetchUser(user.id);
         } else {
           throw new Error('接口调用错误');

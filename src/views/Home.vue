@@ -14,7 +14,8 @@ export default {
   data() {
     return {
       feedData: [],
-      endId: '',
+      page: 1,
+      pageSize: 12,
       fetching: false,
       orignData: [],
     };
@@ -66,14 +67,13 @@ export default {
       this.fetching = true;
       try {
         const { data, success } = await getHomeFeed({
-          oid: this.oid,
-          cursor_score: this.endId,
+          category: this.oid,
+          page: this.page,
+          pageSize: this.pageSize,
         });
         if (success) {
           this.orignData = data;
-          this.endId = data[
-            data.length - 1
-          ].cursor_score;
+          this.page += 1;
         } else {
           throw new Error('接口调用错误');
         }

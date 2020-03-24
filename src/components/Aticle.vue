@@ -42,7 +42,7 @@ export default {
     liked_count: Number,
     collected_count: Number,
     comments_count: Number,
-    time: Number,
+    time: String,
   },
 
   computed: {
