@@ -96,7 +96,7 @@ export default {
       background: no-repeat center / cover;
       border-radius: 5px;
       box-sizing: border-box;
-      opacity: 60%;
+      opacity: 0.6;
       transition: .5s;
 
       &:hover {

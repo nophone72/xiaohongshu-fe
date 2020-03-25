@@ -14,9 +14,9 @@
           :title="noteData.title"
           :description="noteData.desc"
           :ats="noteData.ats"
-          :liked_count="noteData.liked_count"
-          :collected_count="noteData.collected_count"
-          :comments_count="noteData.comments_count"
+          :liked_count="noteData.likes"
+          :collected_count="noteData.collects"
+          :comments_count="noteData.comments"
           :time="noteData.time"
         />
       </div>

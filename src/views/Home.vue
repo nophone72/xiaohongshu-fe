@@ -15,7 +15,7 @@ export default {
     return {
       feedData: [],
       page: 1,
-      pageSize: 12,
+      pageSize: 10,
       fetching: false,
       orignData: [],
     };

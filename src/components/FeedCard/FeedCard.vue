@@ -5,7 +5,7 @@
     <h3 class="title">{{ feedData.title }}</h3>
     <div class="info">
       <div class="user">
-        <img class="user-img" v-lazy="feedData.user.images" />
+        <img class="user-img" v-lazy="feedData.user.image" />
         <span class="name">{{ feedData.user.nickname }}</span>
       </div>
       <span class="icon"><i class="iconfont icon-like2"></i>{{ feedData.likes }}</span>

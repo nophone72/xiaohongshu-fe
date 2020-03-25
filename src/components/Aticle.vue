@@ -91,6 +91,7 @@ export default {
     span {
       margin-right: 24px;
       display: inline-block;
+      color: rgb(121, 121, 122);
 
       .iconfont {
         font-size: 21px;

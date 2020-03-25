@@ -74,7 +74,7 @@ export default {
     async fetchRelated() {
       try {
         const { data, success } = await getRelated(this.$route.params.id, {
-          page_size: this.pageSize,
+          pageSize: this.pageSize,
           page: this.page,
         });
 
@@ -173,6 +173,6 @@ export default {
 }
 
 .down {
-  opacity: 60%;
+  opacity: 0.6;
 }
 </style>
