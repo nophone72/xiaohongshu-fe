@@ -194,7 +194,7 @@ export default {
           .desc {
             width: 200px;
             font-size: 16px;
-            opacity: 60%;
+            opacity: 0.6;
             height: 30px;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -216,12 +216,12 @@ export default {
           font-size: 14px;
 
           p:first-child {
-            opacity: 60%;
+            opacity: 0.6;
             margin: 12px 0 7px 0;
           }
 
           p:last-child {
-            opacity: 80%;
+            opacity: 0.8;
           }
 
 
