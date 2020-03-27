@@ -6,7 +6,7 @@
         <Video
           v-else-if="noteData.type === 'video'"
           :url="noteData.video.url"
-          :poster="noteData.imageList[0].url"
+          :poster="noteData.cover.url"
         />
       </div>
       <div class="word">
@@ -23,6 +23,7 @@
       <Comments
         class="comments"
         :authorId="user.id"
+        :noteId="noteId"
       />
     </div>
     <div class="author-and-recommend">

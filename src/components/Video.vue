@@ -23,6 +23,13 @@ export default {
       poster: this.poster,
     });
   },
+
+  watch: {
+    url() {
+      this.player.url = this.url;
+      this.player.poster = this.poster;
+    },
+  },
 };
 
 

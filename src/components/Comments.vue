@@ -46,6 +46,7 @@ import { setTime, emojComment } from '@/utils';
 export default {
   props: {
     authorId: String,
+    noteId: String,
   },
 
   data() {
@@ -64,7 +65,7 @@ export default {
 
     async fetchComment() {
       try {
-        const { data, success } = await getComment(this.$route.params.id, {
+        const { data, success } = await getComment(this.noteId, {
           page_size: 3,
           end_id: this.endId,
         });
@@ -89,6 +90,16 @@ export default {
     showMore() {
       if (this.fetching) return;
       this.fetching = true;
+      this.fetchComment();
+    },
+  },
+
+  watch: {
+    noteId() {
+      this.commentList = [];
+      this.endId = '';
+      this.fetching = true;
+      this.commentsTotal = 0;
       this.fetchComment();
     },
   },
